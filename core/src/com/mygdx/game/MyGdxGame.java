@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -25,14 +26,18 @@ public class MyGdxGame extends ApplicationAdapter {
 	int y;
 	Stage stage;
 	Girl runner;
+	static int score=0;
 
 
 	@Override
 	public void create() {
 		stage = new Stage();
-		batch = new SpriteBatch();
+		Gdx.input.setInputProcessor(stage);
 		runner = new Girl();
-		stage.addActor(runner);
+		stage.addActor(new Girl());
+		stage.setKeyboardFocus(runner);
+		batch = new SpriteBatch();
+		/*
 		Label text;
 		Label.LabelStyle textStyle;
 		BitmapFont font = new BitmapFont();
@@ -41,7 +46,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		text = new Label(String.valueOf(System.currentTimeMillis()),textStyle);
 		text.setFontScale(1f,1f);
 		stage.addActor(text);
-		Gdx.input.setInputProcessor(stage);
+		*/
 		//This will display 10 frames in one second
 		//1/20 will display 20 frames in one second
 
@@ -58,6 +63,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			runner = new Girl();
 			stage.addActor(runner);
 		}
+		BitmapFont font = new BitmapFont();
+		batch.begin();
+		font.getData().setScale(5f);
+		font.draw(batch,String.valueOf(score),100,Gdx.graphics.getHeight());
+		batch.end();
 	}
 
 	@Override
@@ -65,4 +75,5 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.dispose();
 		stage.dispose();
 	}
+
 }
